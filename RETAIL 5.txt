@@ -1,0 +1,88 @@
+Calculate And Predict Customer
+Lifetime Value
+Calculate and predict Customer Lifetime Value (CLV).
+• Calculate CLV using different approaches and frameworks.
+• Explore predictive modeling techniques such as linear regression and logistic regression for CLVprediction.
+• Assess the accuracy and reliability of CLV predictions.
+Theory:
+Predicting Customer Lifetime Value (CLV) involves estimating the total revenue a business can expect to earn from a
+customer throughout their entire relationship. CLV is crucial for businesses to make informed decisions about marketing
+strategies, customer acquisition costs, and overall business profitability.
+CLV formula:
+Customer Value = Average Purchase Value x Purchase Frquency x Customer Lifespan/ Churn rate
+
+1. Discuss whether CLV fits as a metric in our business
+2. Identification and understanding of sources and metadata
+3. Extract, transform, clean and load data
+4. Choose CLV method
+5. Analyze results and adjust parameters
+6. Present and explain the results
+
+----------------------------------------
+
+install.packages(c("dplyr", "tidyr", "caret"))
+
+library(dplyr)
+library(tidyr)
+library(caret)
+df <- read.csv(" ")
+
+summary(df)
+str(df)
+
+
+any_missing <- any(is.na(df))
+print(any_missing)
+df$default <- as.factor(df$default)
+df$housing <- as.factor(df$housing)
+df$loan <- as.factor(df$loan)
+df <- df[, !(names(df) %in% c("unnecessary_variable1", "unnecessary_variable2"))]
+boxplot(df$balance, main = "Balance Boxplot", ylab = "Balance")
+z_scores <- scale(df$balance)
+threshold <- 3
+outliers <- abs(z_scores) > threshold
+df <- df[!outliers, ]
+
+set.seed(123)
+split_index <- createDataPartition(df$duration, p = 0.8, list = FALSE)
+train_data <- df[split_index, ]
+test_data <- df[-split_index, ]
+
+
+model <- lm(duration ~ age + balance + campaign + pdays + previous, data = train_data)
+predictions <- predict(model, newdata = test_data)
+mse <- mean((test_data$duration - predictions)^2)
+print(paste("Mean Squared Error (MSE):", mse))
+
+#scatter plot and clv
+
+ggplot() +
+geom_point(aes(x = test_data$duration, y = predictions), color = "blue") +
+geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+labs(title = "Actual vs. Predicted CLV", x = "Actual CLV", y = "Predicted CLV")
+
+logistic_model <- glm(default ~ age + balance + campaign + pdays + previous,
+data = train_data, family = "binomial")
+logistic_probabilities <- predict(logistic_model, newdata = test_data, type = "response")
+logistic_predictions <- ifelse(logistic_probabilities > 0.5, 1, 0)
+logistic_accuracy <- sum(logistic_predictions == test_data$default) / nrow(test_data)
+print(paste("Logistic Regression Accuracy:", logistic_accuracy))
+
+ggplot() +
+geom_point(aes(x = test_data$default, y = logistic_probabilities), color = "blue") +
+geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+labs(title = "Actual vs. Predicted CLV (Logistic Regression)", x = "Actual CLV", y = "Predicted CLV")
+
+---------------------------------------------
+Interpretation and Implications:
+The linear regression model yielded a Mean Squared Error (MSE) of 120826.42, indicating the average squared
+difference between actual and predicted CLV values. The logistic regression model had an accuracy of 0, suggesting 
+thatthe predictions did not match the actual outcomes. Possible reasons include class imbalance, feature selection, or 
+data quality issues.
+Further analysis and model refinement may be necessary to improve the predictive performance of both models. This
+practical aimed to demonstrate the application of linear and logistic regression for Customer Lifetime Value (CLV)
+prediction, emphasizing the importance of careful data preprocessing and model evaluations
+
+
+
+

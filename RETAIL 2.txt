@@ -1,0 +1,66 @@
+Gain proficiency in visualizing marketing data using R.
+• Understand the key elements of data visualization.
+• Create various visualizations such as histograms, scatter plots, line plots, and bar charts using the ggplot() function in R.
+• Apply appropriate visualization techniques to effectively communicate marketing insights
+-----------------------------------------------
+
+library (ggplot2)
+superstore_data <- read.csv(" ")
+selected_data <- superstore_data[, c("ID","Year_Birth", "Marital_Status", "Education", "Dt_Customer", "Recency", "NumStorePurchases", "NumWebPurchases", "NumWebVisitsMonth")]
+selected_data <- unique(selected_data)
+
+#histrogram
+ggplot(selected_data, aes(x = Education)) +
+geom_bar(fill = "lightgreen", color = "black") +
+labs(title = "Bar Plot of Education",
+x = "Education Level",
+y = "Count") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+
+marital_counts <- table(selected_data$Marital_Status)
+marital_df <- data.frame(Marital_Status = names(marital_counts),
+Count = as.numeric(marital_counts))
+
+#pie chart
+ggplot(marital_df, aes(x = "", y = Count, fill = Marital_Status)) +
+geom_bar(stat = "identity", width = 1, color = "white") +
+coord_polar("y") +
+labs(title = "Marital Status Distribution",
+fill = "Marital Status") +
+theme_void() +
+scale_fill_brewer(palette = "Set3") 
+
+#scatter plot
+ggplot(selected_data, aes(x = Year_Birth)) +
+geom_point(aes(y = NumWebPurchases), color = "blue", alpha = 0.5) +
+geom_point(aes(y = NumStorePurchases), color = "red", alpha = 0.5) +
+labs(title = "Scatter Plot of Age vs. Purchases",
+x = "Age",
+y = "Number of Purchases") +
+theme_minimal()
+
+
+#line plot
+ggplot(selected_data, aes(x = ID)) +
+geom_line(aes(y = NumWebVisitsMonth, color = "Web Visits")) +
+geom_line(aes(y = NumWebPurchases, color = "Web Purchases")) +
+labs(title = "Line Plot of ID vs. Web Visits and Web Purchases",
+x = "ID",
+y = "Values") +
+scale_color_manual(values = c("Web Visits" = "blue", "Web Purchases" = "green")) +
+theme_minimal()
+
+
+#boxplot
+ggplot(selected_data, aes(y = Recency)) +
+geom_boxplot(fill = "skyblue", color = "black") +
+labs(title = "Box Plot of Recency",
+y = "Recency") +
+theme_minimal()
+
+---------------------------------------------
+Interpretation and Implications:
+A majority of the customers who visit the store are educated till graduation level or are married.
+From the scatter plot we know that the store purchases are higher than the web purchases. The recency of customer to
+a store to come back at the store is between 25 to 75 times and the average amount of web purchased are 2-8 items.
+So, if the company want to plan a sale if can target more on store purchases rather than web purchases

@@ -1,0 +1,56 @@
+Hypothesis Testing In Experiment 
+Outcomes
+Understand the concept of hypothesis testing and its role in assessing experiment
+outcomes.
+• Explore the purpose of hypothesis testing in analyzing experiment results.
+• Familiarize with key terminologies related to hypothesis testing.
+• Learn the process of hypothesis testing and power calculation.
+• Conduct hypothesis testing using R to evaluate experiment outcomes.
+#Null Hypothesis (H0):
+#H0: There is no significant relationship between a customer's age and the number of web purchases made.
+#Alternative Hypothesis (Ha):
+#Ha: There is a significant relationship between a customer's age and the number of web purchases made.
+
+
+-------------------------------------------
+library (ggplot2)
+superstore_data <- read.csv(" ")
+selected_data <- superstore_data[, c("ID","Year_Birth", "Marital_Status", "Education", "Dt_Customer", "Recency", "NumStorePurchases", "NumWebPurchases", "NumWebVisitsMonth")]
+selected_data <- unique(selected_data)
+
+
+t_test_result <- t.test(selected_data$Year_Birth, selected_data$NumWebPurchases)
+print(t_test_result)
+
+mean_difference <- mean(selected_data$Year_Birth) - mean(selected_data$NumWebPurchases)
+standard_deviation <- sqrt((var(selected_data$Year_Birth) + var(selected_data$NumWebPurchases)) / 2)
+effect_size <- mean_difference / standard_deviation
+print(effect_size)
+
+
+mean_difference <- mean(selected_data$Year_Birth) - mean(selected_data$NumWebPurchases)
+standard_deviation <- sqrt((var(selected_data$Year_Birth) + var(selected_data$NumWebPurchases)) / 2)
+effect_size <- mean_difference / standard_deviation
+print(effect_size)
+
+---------------------------------------
+Interpretation and Implications:
+T-Test Result: The extremely small p-value (< 0.0001) indicates strong evidence against the null hypothesis, suggesting 
+ahighly significant difference between the mean age and the mean number of web purchases. The confidence interval
+also confirms this significant difference, indicating that the means of the two groups (age and web purchases) are not
+equal.
+Two Sample t-test:
+• t-value: 7558.7
+• Degrees of Freedom (df): 2479.1
+• p-value: < 2.2e-16 (extremely small)
+• Confidence Interval: 95% CI for the difference in means: (1964.211, 1965.231)
+• Sample Estimates: Mean of 'Year_Birth': 1968.805804, Mean of 'NumWebPurchases': 4.084821
+Power Calculation:
+The calculated statistical power of 1 indicates a high probability of correctly detecting the observedeffect (difference in 
+means) if it truly exists in the population. A power of 1 suggests that the study is well-powered to detect the effect,
+leaving almost no chance of a Type II error (false negative).
+• Sample Size (n): 100 in each group.
+• Effect Size (d): 225.8605.
+• Significance Level (sig.level): 0.05 Power (power): 1 (High)
+
+

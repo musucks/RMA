@@ -1,0 +1,44 @@
+Design & Conduct Experiments For
+Marketing Campaigns
+Design and conduct experiments for marketing campaigns.
+• Learn about experimental design and its application in marketing.
+• Design experiments using examples from marketing scenarios.
+• Implement randomization and sample splitting techniques.
+• Conduct the experiments and collect relevant data for analysis.
+------------------------------------------------------
+
+library (ggplot2)
+superstore_data <- read.csv(" ")
+
+selected_data <- superstore_data[, c("ID","Year_Birth", "Marital_Status", "Education", "Dt_Customer", "Recency", "NumStorePurchases", "NumWebPurchases", "NumWebVisitsMonth")]
+selected_data <- unique(selected_data)
+
+set.seed(123)
+selected_data$treatment_group <- ifelse(runif(nrow(selected_data)) <= 0.7, "Treatment", "Control")
+
+treatment_data <- selected_data[selected_data$treatment_group == "Treatment", ]
+control_data <- selected_data[selected_data$treatment_group == "Control", ]
+sample_size <- floor(0.7 * nrow(selected_data))
+sampled_data <- selected_data[sample(1:nrow(selected_data), size = sample_size, replace = FALSE), ]
+
+dim(sampled_data)
+--------------------------------------------------
+
+Interpretation and Implications:
+The following are the Sample Sizes:
+• Control Data: 666 observations.
+• Sampled Data: 568 observations.
+• Selected Data: 2240 observations.
+• Superstore Data: 2240 observations (initial dataset).
+• Treatment Data: 1574 observations.
+• Sample Size: 1568 (seems to be a specified or calculated value).
+Randomization Outcome: The randomization procedure allocated 666 observations to the control group and 1574
+observations to the treatment group. This random assignment helps avoid bias when analyzing the impact of different
+factors on customer behavior.
+Simple Random Sample: A simple random sample extracted 568 observations from the initial dataset (superstore data)
+for analysis. This sample represents a subset of the entire dataset and allows for analysis while retaining the diversity 
+ofobservations.
+Sample Size: The specified sample size for analysis appears to be 1568, which is close to the combined size of the
+control and treatment groups. It might represent the desired sample size for the experiment or analysis.
+Conclusion: The randomization and sampling procedures have successfully divided the dataset into control and
+treatment groups and extracted a random sample for analysi

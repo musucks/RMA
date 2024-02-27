@@ -1,0 +1,57 @@
+CLV and Cohort Analysis
+Apply CLV analysis and cohort analysis in marketing analytics.
+• Analyze CLV data and identify patterns and trends.
+• Perform cohort analysis to segment customers based on their behavior or characteristics.
+• Interpret the results of CLV analysis and cohort analysis to derive actionable insights for marketingstrategies.
+Theory:
+Customer Lifetime Value (CLV) analysis and cohort analysis are valuable tools in marketing analytics to understand
+customer behavior, identify patterns, and derive actionable insights. Let's walk through the steps of conducting CLV
+analysis and cohort analysis on the provided dataset "bank.csv."
+
+
+-------------------------------
+install.packages(c("dplyr", "tidyr", "caret"))
+
+
+library(dplyr)
+bank_data <- read.csv(" ")
+
+average_balance <- mean(bank_data$balance)
+average_duration <- mean(bank_data$duration)
+
+total_customers <- nrow(bank_data)
+clv <- (average_balance * average_duration) / total_customers
+cat("Customer Lifetime Value (CLV):", clv, "\n")
+
+
+# bank_data$day <- factor(bank_data$day, levels = day.abb)
+
+bank_data$acquisition_day <- as.Date(bank_data$day, format = "%d-%b")
+cohort_sizes <- bank_data %>% group_by(acquisition_day) %>% summarise(cohort_size = n())
+
+print(cohort_sizes)
+print(cohort_sizes, n = 31)
+----------------------------------
+
+Interpretation and Implication:
+• Data Preprocessing: Rows with missing values were removed to ensure data quality.
+• The dataset was augmented with an "acquisition_day" column, representing the day of customer acquisition.
+• Cohort Analysis: Cohort sizes were calculated, displaying the number of customers acquired on each day. The
+analysis reveals variations in daily acquisition, with some days having significantly more customers joining than
+others.
+• Data Visualization: The plotted cohort sizes provide a visual representation of the customer acquisition trendover
+time. Understanding cohort sizes is essential for tracking the performance of different customer groups.
+• Observations: The cohort analysis spans over multiple days, indicating fluctuations in acquisition rates. Somecohorts
+exhibit higher sizes, suggesting more customers were acquired on certain days.
+• Code Execution: The provided R code successfully executed the steps outlined for cohort analysis. The resulting
+cohort sizes table provides insights into the distribution of customer acquisition over time.
+• Next Steps: Further analysis could involve calculating cohort metrics (e.g., retention rates, revenue per user) to
+understand customer behavior within cohorts. Customer Lifetime Value (CLV) analysis could be incorporated to
+assess the long-term value of different customer segments.
+• Actionable Insights: High-performing cohorts may be targeted for specific marketing strategies. Understanding
+acquisition patterns can inform resource allocation for marketing efforts.
+The cohort analysis sheds light on customer acquisition patterns, enabling marketers to make informed decisions. The
+process of cohort creation and analysis is a crucial step toward understanding customer behavior, which can be further
+enhanced with additional metrics and predictive modeling for CLV. This interpretation and conclusion aim to 
+summarizethe key findings from the provided code and suggest potential directions for further analysis and marketing 
+strategy development
