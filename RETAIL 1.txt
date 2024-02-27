@@ -1,0 +1,26 @@
+library(tidyverse)
+superstore_data <- read.csv(" ")
+
+missing_values <- colSums(is.na(superstore_data))
+for (col in names(superstore_data)) {
+if (sum(is.na(superstore_data[[col]])) > 0 & is.numeric(superstore_data[[col]])) {
+superstore_data[[col]][is.na(superstore_data[[col]])] <- mean(superstore_data[[col]], na.rm = TRUE)
+}}
+
+selected_data <- superstore_data[, c("Year_Birth", "Marital_Status", "Education", "Dt_Customer", "Recency",
+"NumStorePurchases", "NumWebPurchases", "NumWebVisitsMonth")]
+selected_data <- unique(selected_data)
+
+selected_data$Dt_Customer <- as.Date(selected_data$Dt_Customer, format = "%Y-%m-%d")
+selected_data$Year_Birth <- as.numeric(as.character(selected_data$Year_Birth))
+
+selected_data$Age <- as.integer(format(Sys.Date(), "%Y")) - selected_data$Year_Birth
+hist(selected_data$Age,
+main = "Histogram of Age",
+xlab = "Age",
+col = "salmon")
+
+summary(superstore_data)
+
+table(selected_data$NumWebPurchases)
+table(selected_data$NumStorePurchases)
