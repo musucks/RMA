@@ -1,3 +1,10 @@
+#Tabulate And Summarize Marketing Data 
+#Learn how to tabulate and summarize marketing data using R.
+#Clean and preprocess the marketing data.
+# Generate a simple histogram plot to visualize data distribution.
+# Use tabulation and summary functions to gain insights from the data.
+# Interpret the findings and discuss the implications for marketing analysis.
+
 library(tidyverse)
 superstore_data <- read.csv(" ")
 
